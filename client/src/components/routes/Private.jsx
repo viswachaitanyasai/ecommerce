@@ -33,16 +33,29 @@ export default function PrivateRoute() {
     const [auth, setAuth] = useAuth();
   
     useEffect(() => {
+      // const authCheck = () => {
+      //   const res =  axios.get(`${process.env.REACT_APP_API}/api/v1/auth/user-auth`);
+      //   if (res.data.ok) {
+      //     setOk(true);
+      //   } else {
+      //     setOk(false);
+      //   }
+      // };
       const authCheck = async () => {
-        const res = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/user-auth`);
-        if (res.data.ok) {
-          setOk(true);
-        } else {
+        try {
+          const res = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/user-auth`);
+          if (res.data.ok) {
+            setOk(true);
+          } else {
+            setOk(false);
+          }
+        } catch (error) {
+          console.error('Error during authentication check:', error);
           setOk(false);
         }
       };
+      
       if (auth?.token) authCheck();
-    }, [auth?.token]);
-  
-    return ok ? <Outlet /> : <Spinner />;
+    }, [auth?.token, auth]);
+    return ok ? <Outlet /> : <Spinner/>;
   }
