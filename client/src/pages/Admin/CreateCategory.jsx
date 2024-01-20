@@ -5,7 +5,6 @@ import toast from 'react-hot-toast'
 import axios from 'axios'
 import CategoryForm from '../../components/Form/CategoryForm'
 import { Modal } from "antd"
-import { TfiUnderline } from 'react-icons/tfi'
 
 const CreateCategory = () => {
     const [categories, setCategories] = useState([]);
