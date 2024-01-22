@@ -10,6 +10,18 @@ const Homepage = () => {
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
   const [radio, setRadio] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const getTotal = async () => {
+    try {
+      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-count`);
+      setTotal(data?.total)
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const getAllCategory = async () => {
     try {
@@ -24,14 +36,35 @@ const Homepage = () => {
 
   useEffect(() => {
     getAllCategory();
+    getTotal();
   }, []);
 
   const getAllProducts = async () => {
     try {
-      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/get-product`);
+      setLoading(true);
+      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-list/${page}`);
+      setLoading(false);
       setProducts(data.products);
     } catch (error) {
+      setLoading(false);
       console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    if(page === 1) return;
+    laodMore();
+  },[page]);
+
+  const laodMore = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-list/${page}`)
+      setLoading(false);
+      setProducts([...products, ...data?.products])
+    } catch (error) {
+      console.log(false)
+      setLoading(false);
     }
   }
 
@@ -83,9 +116,11 @@ const Homepage = () => {
               ))}
             </Radio.Group>
           </div>
+          <div>
+            <button onClick={() => window.location.reload()}>Rest Filter</button>
+          </div>
         </div>
         <div>
-          {JSON.stringify(radio, null, 4)}
           <h1>All Products</h1>
           <div className='app__home-products-box'>
             {products?.map((p) => (
@@ -93,13 +128,20 @@ const Homepage = () => {
                 <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} alt={p.name} style={{ width: "14rem" }} />
                 <div>
                   <h5>{p.name}</h5>
-                  <p>{p.description.substring(0,15)}...</p>
+                  <p>{p.description.substring(0, 15)}...</p>
                   <p>Rs. {p.price}</p>
                   <button>More Details</button>
                   <button>Add to cart</button>
                 </div>
               </div>
             ))}
+          </div>
+          <div>
+            {products && products.length < total && (
+              <button onClick={(e) => { e.preventDefault(); setPage(page + 1) }}>
+                {loading ? "loading..." : "load more"}
+              </button>
+            )}
           </div>
         </div>
       </div>
