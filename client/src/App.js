@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes,Route } from "react-router-dom";
-import {Homepage, About,Contact,Policy,PageNotFound, Register, Login, Dashboard, ForgotPassword, AdminDashboard, CreateCategory, CreateProduct, Users , Profile, Orders, Products, UpdateProducts} from "./pages/pages";
+import {Homepage, About,Contact,Policy,PageNotFound, Register, Login, Dashboard, ForgotPassword, AdminDashboard, CreateCategory, CreateProduct, Users , Profile, Orders, Products, UpdateProducts, Search} from "./pages/pages";
 import PrivateRoute from "./components/routes/Private";
 import AdminRoute from "./components/routes/AdminRoute";
 
@@ -10,6 +10,7 @@ function App() {
       <Routes>
           <Route path="/" element={<Homepage/>}/>
           <Route path="/home" element={<Homepage/>}/>
+          <Route path="/search" element={<Search/>}/>
 
           <Route path="/dashboard" element={<PrivateRoute/>}>
               <Route path="user" element={<Dashboard/>}/>
