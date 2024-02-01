@@ -8,7 +8,7 @@ const Dashboard = () => {
   const [auth] = useAuth();
   return (
     <Layout>
-        <div>
+        <div className='app__dashboard'>
           <div>
             <UserMenu/>
           </div>

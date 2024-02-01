@@ -6,7 +6,7 @@ import "./Orders.scss"
 const Orders = () => {
   return (
     <Layout>
-        <div>
+        <div className='app_orders'>
             <div>
                 <UserMenu/>
             </div>

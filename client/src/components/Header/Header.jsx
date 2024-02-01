@@ -5,9 +5,17 @@ import { useAuth } from '../../context/auth'
 import { token } from 'morgan'
 import toast from 'react-hot-toast'
 import SearchInput from '../Form/SearchInput'
+import useCategory from '../../hooks/useCategory'
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Link } from 'react-router-dom'
+import { useCart } from '../../context/cart'
+import { Badge } from "antd";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
+  const [cart, setCart] = useCart();
+  const categories = useCategory();
+  console.log(categories);
   const handleLogOut = () => {
     setAuth({
       ...auth,
@@ -26,13 +34,18 @@ const Header = () => {
       </div>
 
       <ul className="app__navbar-links">
-        <SearchInput/>
+        <SearchInput />
         <li>
           <NavLink to="/home" >home</NavLink>
         </li>
-        <li>
-          <NavLink to="/category" >category</NavLink>
-        </li>
+
+        <NavDropdown title="Category" id="basic-nav-dropdown" className='app__header-dropdown'>
+          <NavDropdown.Item><Link style={{ textDecoration: "none", color: "black" }} to={`/categories`}>All categories</Link></NavDropdown.Item>
+          {categories?.map((c) => (
+            <NavDropdown.Item><Link to={`/category/${c.slug}`} style={{ textDecoration: "none", color: "black" }}>{c.name}</Link></NavDropdown.Item>
+          ))}
+        </NavDropdown>
+
         {!auth.user ? (<>
           <li>
             <NavLink to="/register" >Register</NavLink>
@@ -49,7 +62,9 @@ const Header = () => {
           </li>
         </>)}
         <li>
-          <NavLink to="/cart" >Cart (0)</NavLink>
+          <Badge count={cart?.length} showZero>
+            <NavLink to="/cart" >Cart</NavLink>
+          </Badge>
         </li>
       </ul>
     </nav>

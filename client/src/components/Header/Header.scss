@@ -1,4 +1,4 @@
-.app__navbar{
+.app__navbar {
     width: 100%;
 
     display: flex;
@@ -6,21 +6,21 @@
     align-items: center;
     padding: 1rem 2rem;
 
-    background: rgba(255,255,255,0.25);
+    background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(255,255,255,0.18);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     // position:fixed;
     z-index: 2;
     box-shadow: 0 0 10px 0 rgb(56, 55, 55);
 }
 
-.app__navbar-logo{
+.app__navbar-logo {
     display: flex;
     justify-content: flex-start;
     align-items: center;
 
-    img{
+    img {
         width: 120px;
         height: 35px;
 
@@ -31,21 +31,21 @@
     }
 }
 
-.app__navbar-links{
-    flex: 1;  
+.app__navbar-links {
+    flex: 1;
     display: flex;
-    justify-content:end;
+    justify-content: end;
     align-items: center;
 
     list-style: none;
 
-    li{
+    li {
         margin: 0 1rem;
         cursor: pointer;
 
         flex-direction: column;
 
-        div{
+        div {
             width: 5px;
             height: 5px;
             background: transparent;
@@ -54,7 +54,7 @@
             margin-bottom: 5px;
         }
 
-        a{
+        a {
             display: flex;
             color: var(--gray-color);
             text-decoration: none;
@@ -66,19 +66,40 @@
 
             transition: all 0.2s ease-in-out;
 
-            &:hover{
+            &:hover {
                 color: var(--secondary-color);
                 font-weight: 800;
                 scale: 1.1;
             }
         }
-        &:hover{
-            div{
+
+        &:hover {
+            div {
                 background-color: var(--secondary-color);
             }
         }
     }
+
     // @media screen and (max-width:900px) {
     //     display: none;
+    // }
+}
+
+.app__header-dropdown {
+    display: flex;
+    color: var(--gray-color);
+    text-decoration: none;
+    width: 5.8rem;
+    justify-content: center;
+
+    text-transform: uppercase;
+    font-weight: 500;
+
+    transition: all 0.2s ease-in-out;
+
+    // &:hover {
+    //     color: var(--secondary-color);
+    //     font-weight: 800;
+    //     scale: 1.1;
     // }
 }
