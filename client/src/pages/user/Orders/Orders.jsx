@@ -31,48 +31,46 @@ const Orders = () => {
         </div>
         <div>
           <h1>All Orders</h1>
-          {
-            orders.map((o, i) => {
-              return (
+          {orders.map((o, i) => {
+            return (
+              <div>
+                <table>
+                  <thead>
+                    <th>#</th>
+                    <th>Status</th>
+                    <th>Buyer</th>
+                    <th>Orders</th>
+                    <th>Payment</th>
+                    <th>Quantity</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{i + 1}</td>
+                      <td>{o?.status}</td>
+                      <td>{o?.buyer?.name}</td>
+                      <td>{moment(o?.createAt).fromNow()}</td>
+                      <td>{o?.payment.success ? "Success" : "Failed"}</td>
+                      <td>{o?.products?.length}</td>
+                    </tr>
+                  </tbody>
+                </table>
                 <div>
-                  <table>
-                    <thead>
-                      <td>#</td>
-                      <td>Status</td>
-                      <td>Buyer</td>
-                      <td>Orders</td>
-                      <td>Payment</td>
-                      <td>Quantity</td>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th>{i + 1}</th>
-                        <th>{o?.status}</th>
-                        <th>{o?.buyer?.name}</th>
-                        <th>{moment(o?.createAt).fromNow()}</th>
-                        <th>{o?.payment.success ? "Success" : "Failed"}</th>
-                        <th>{o?.products?.length}</th>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div>
-                    {o?.products?.map((p, i) => (
+                  {o?.products?.map((p, i) => (
+                    <div>
                       <div>
-                        <div>
-                          <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} alt={p.name} style={{ width: "14rem" }} />
-                        </div>
-                        <div>
-                          <p>{p.name}</p>
-                          <p>{p.description.substring(0, 10)}</p>
-                          <p>Price :{p.price}</p>
-                        </div>
+                        <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} alt={p.name} style={{ width: "14rem" }} />
                       </div>
-                    ))}
-                  </div>
+                      <div>
+                        <p>{p.name}</p>
+                        <p>{p.description.substring(0, 10)}</p>
+                        <p>Price :{p.price}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              )
-            })
-          }
+              </div>
+            )
+          })}
         </div>
       </div>
     </Layout>
