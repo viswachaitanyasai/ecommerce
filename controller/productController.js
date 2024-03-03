@@ -8,7 +8,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-var gateway = new braintree.BraintreeGateway({
+const gateway = new braintree.BraintreeGateway({
     environment: braintree.Environment.Sandbox,
     merchantId: process.env.BRAINTREE_MERCHANT_ID,
     publicKey: process.env.BRAINTREE_PUBLIC_KEY,
@@ -290,16 +290,25 @@ export const productCategoryController = async (req, res) => {
 
 export const braintreeTokenController = async (req, res) => {
     try {
-        gateway.clientToken.generate({}, function (err, response) {
-            if (err) {
-                res.status(500).send(err)
-            } else {
-                res.send(response);
-            }
+        gateway.clientToken.generate({}).then((response) => {
+            res.status(200).send(response);
+        }).catch((err) => {
+            res.status(500).send(err);
         })
     } catch (error) {
         console.log(error);
     }
+    // try {
+    //     gateway.clientToken.generate({}, function (err, response) {
+    //         if (err) {
+    //             res.status(500).send(err)
+    //         } else {
+    //             res.send(response);
+    //         }
+    //     })
+    // } catch (error) {
+    //     console.log(error);
+    // }
 }
 
 export const braintreePaymentController = async (req, res) => {
