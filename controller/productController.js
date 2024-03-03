@@ -288,16 +288,16 @@ export const productCategoryController = async (req, res) => {
     }
 }
 
-export const braintreeTokenController = async (req, res) => {
-    try {
-        gateway.clientToken.generate({}).then((response) => {
-            res.status(200).send(response);
-        }).catch((err) => {
-            res.status(500).send(err);
-        })
-    } catch (error) {
-        console.log(error);
-    }
+// export const braintreeTokenController = async (req, res) => {
+//     try {
+//         gateway.clientToken.generate({}).then((response) => {
+//             res.status(200).send(response);
+//         }).catch((err) => {
+//             res.status(500).send(err);
+//         })
+//     } catch (error) {
+//         console.log(error);
+//     }
     // try {
     //     gateway.clientToken.generate({}, function (err, response) {
     //         if (err) {
@@ -309,34 +309,34 @@ export const braintreeTokenController = async (req, res) => {
     // } catch (error) {
     //     console.log(error);
     // }
-}
+// }
 
-export const braintreePaymentController = async (req, res) => {
-    try {
-        const { cart, nonce } = req.body;
-        let total = 0;
-        cart.map((i) => { total += i.price });
-        let newTransaction = gateway.transaction.sale({
-            amount: total,
-            paymentMethodNonce: nonce,
-            options: {
-                submitForSettlement: true
-            }
-        },
-            function (error, result) {
-                if (result) {
-                    const order = new orderModel({
-                        products: cart,
-                        payment: result,
-                        buyer: req.user._id
-                    }).save()
-                    res.json({ ok: true })
-                } else {
-                    res.status(500).send(error);
-                }
-            }
-        )
-    } catch (error) {
-        console.log(error);
-    }
-}
+// export const braintreePaymentController = async (req, res) => {
+//     try {
+//         const { cart, nonce } = req.body;
+//         let total = 0;
+//         cart.map((i) => { total += i.price });
+//         let newTransaction = gateway.transaction.sale({
+//             amount: total,
+//             paymentMethodNonce: nonce,
+//             options: {
+//                 submitForSettlement: true
+//             }
+//         },
+//             function (error, result) {
+//                 if (result) {
+//                     const order = new orderModel({
+//                         products: cart,
+//                         payment: result,
+//                         buyer: req.user._id
+//                     }).save()
+//                     res.json({ ok: true })
+//                 } else {
+//                     res.status(500).send(error);
+//                 }
+//             }
+//         )
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
